@@ -134,7 +134,17 @@ public class Part_3 {
 
     /** Recursively delete ALL empty files (length == 0) under 'root'. */
     public static void delEmptyFilesRecursive(Path root) throws IOException {
-
+    	FileSystem fs = fs();
+    	
+    	for (FileStatus st : fs.listStatus(root)) {
+            if (st.isDirectory()) {
+            	ensureUnder(fs, root, st.getPath());
+                delEmptyFilesRecursive(st.getPath());
+            } else if (st.getLen() == 0) {
+            	ensureUnder(fs, root, st.getPath());
+            	fs.delete(st.getPath(),false);
+            }
+        }
     }
 
     /**
@@ -142,7 +152,17 @@ public class Part_3 {
      * Exact suffix match, case-sensitive. Example: ".tmp" matches "a.tmp" but NOT "a.tmp.bak".
      */
     public static void delBySuffixRecursive(Path root, String suffix) throws IOException {
-
+    	FileSystem fs = fs();
+    	
+    	for (FileStatus st : fs.listStatus(root)) {
+            if (st.isDirectory()) {
+            	ensureUnder(fs, root, st.getPath());
+                delEmptyFilesRecursive(st.getPath());
+            } else if (st.getPath().getName().endsWith(".tmp")) {
+            	ensureUnder(fs, root, st.getPath());
+            	fs.delete(st.getPath(),false);
+            }
+        }
     }
 
     /**

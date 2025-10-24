@@ -21,7 +21,7 @@ Launch the [QuickStart VM][QuickStarts] using VirtualBox and allocate it at leas
 > 3. Run the docker container. Use the following command to run a container (you should replace $localdir with a directory in your MacOS, then this directory will be mounted to the `/host` directory in the container):
 > 
 > ```
-> docker run --hostname=quickstart.cloudera --privileged=true -t -i -p 8888:8888 -p 10000:10000 -p 10020:10020 -p 11000:11000 -p 18080:18080 -p 18081:18081 -p 18088:18088 -p 19888:19888 -p 21000:21000 -p 21050:21050 -p 2181:2181 -p 25000:25000 -p 25010:25010 -p 25020:25020 -p 50010:50010 -p 50030:50030 -p 50060:50060 -p 50070:50070 -p 50075:50075 -p 50090:50090 -p 60000:60000 -p 60010:60010 -p 60020:60020 -p 60030:60030 -p 7180:7180 -p 7183:7183 -p 7187:7187 -p 80:80 -p 8020:8020 -p 8032:8032 -p 8042:8042 -p 8088:8088 -p 8983:8983 -p 9083:9083 -v $localdir:/host -m=8g qpswwww/quickstarts:v2 /etc/bootstrap.sh -bash
+> docker run --hostname=quickstart.cloudera --privileged=true -t -i -p 8888:8888 -p 10000:10000 -p 10020:10020 -p 11000:11000 -p 18080:18080 -p 18081:18081 -p 18088:18088 -p 19888:19888 -p 21000:21000 -p 21050:21050 -p 2181:2181 -p 25000:25000 -p 25010:25010 -p 25020:25020 -p 50010:50010 -p 50030:50030 -p 50060:50060 -p 50070:50070 -p 50075:50075 -p 50090:50090 -p 60000:60000 -p 60010:60010 -p 60020:60020 -p 60030:60030 -p 7180:7180 -p 7183:7183 -p 7187:7187 -p 80:80 -p 8020:8020 -p 8032:8032 -p 8042:8042 -p 8088:8088 -p 8983:8983 -p 9083:9083 -v /Users/royli/Documents:/host -m=8g qpswwww/quickstarts:v2 /etc/bootstrap.sh -bash
 > ```
 > 
 > 4. After the container starts, you should use source command to revise the environment variables:
@@ -55,7 +55,7 @@ $ hadoop fs -put 1400-8.txt .
 ```
 We can now run the WordCount example to count the occurrences of each word in the file we've just copied:
 ```
-$ hadoop jar target/assignment-2-1.0-SNAPSHOT.jar hk.ust.comp4651.WordCount -input 1400-8.txt -output wc -numReducers 2
+$ hadoop jar target/assignment-3-1.0-SNAPSHOT.jar hk.ust.comp4651.WordCount -input 1400-8.txt -output wc -numReducers 2
 ```
 > Hadoop will print out a wealth of runtime information to track the job execution. Examining this information will give you a clear idea about what's going on there.
 
@@ -67,7 +67,7 @@ Along with the two splits, there is an empty file called `_SUCCESS`, which indic
 
 We have provided a handy tool (`AnalyzeWordCount.java`) to analyze the output:
 ```
-$ hadoop jar target/assignment-2-1.0-SNAPSHOT.jar hk.ust.comp4651.AnalyzeWordCount -input wc
+$ hadoop jar target/assignment-3-1.0-SNAPSHOT.jar hk.ust.comp4651.AnalyzeWordCount -input wc
 ```
 The tool scans the output in `wc` and generates the following statistical summary:
 ```
@@ -129,11 +129,11 @@ where the three terms are tab-delimited (`"\t"`).
 
 Once you are done coding, you can build your programs by `mvn clean package --settings settings.xml`, and run them:
 ```
-$ hadoop jar target/assignment-2-1.0-SNAPSHOT.jar hk.ust.comp4651.BigramCountPairs -input 1400-8.txt -output bc -numReducers 2
+$ hadoop jar target/assignment-3-1.0-SNAPSHOT.jar hk.ust.comp4651.BigramCountPairs -input 1400-8.txt -output bc -numReducers 2
 ```
 To debug, you can either examine the output manually or use the analysis tool provided in `AnalyzeBigramCount.java`:
 ```
-$ hadoop jar target/assignment-2-1.0-SNAPSHOT.jar hk.ust.comp4651.AnalyzeBigramCount -input bc
+$ hadoop jar target/assignment-3-1.0-SNAPSHOT.jar hk.ust.comp4651.AnalyzeBigramCount -input bc
 ```
 As a reference, you should see something like this:
 ```
@@ -194,13 +194,15 @@ We can tell from the output above that "It" has 2 occurrences, both succeeded by
 
 Once you are done coding, you can build your programs by `mvn clean package --settings settings.xml`, and run them:
 ```
-$ hadoop jar target/assignment-2-1.0-SNAPSHOT.jar hk.ust.comp4651.BigramFrequencyPairs -input 1400-8.txt -output bc -numReducers 2
+$ hadoop jar target/assignment-3-1.0-SNAPSHOT.jar hk.ust.comp4651.BigramFrequencyPairs -input 1400-8.txt -output bc -numReducers 2
+
+$ hadoop jar target/assignment-3-1.0-SNAPSHOT.jar hk.ust.comp4651.BigramFrequencyStripes -input 1400-8.txt -output bc -numReducers 2
 ```
 In the command above, we have specified the input file, the output path, and the number of reducers. You are free to try something different.
 
 To debug, we have provided a handy tool (`AnalyzeBigramFrequency.java`) which you can use to produce a statistical summary of your output. For example, if you are interested in bigrams starting with "the", you can extract the ten most frequent occurrences by
 ```
-$ hadoop jar target/assignment-2-1.0-SNAPSHOT.jar hk.ust.comp4651.AnalyzeBigramFrequency -input bc -word the
+$ hadoop jar target/assignment-3-1.0-SNAPSHOT.jar hk.ust.comp4651.AnalyzeBigramFrequency -input bc -word the
 Ten most frequent bigrams starting with the:
 the		7216.0
 the	same	0.011086474
